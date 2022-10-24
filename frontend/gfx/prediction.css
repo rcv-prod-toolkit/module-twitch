@@ -1,0 +1,80 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* background: black; */
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  background-size: contain;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: var(--primary-font-family);
+  color: var(--text-color);
+  font-weight: 700;
+  position: relative;
+}
+
+.container {
+  width: 760px;
+  height: 148px;
+  margin-bottom: 12px;
+  text-align: center;
+  padding-top: 6px;
+  background: var(--background-color);
+}
+
+#heading {
+  font-size: 40px;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+.prediction {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 50px;
+}
+
+#bar {
+  --blue-percentage: 50;
+  height: 35px;
+  width: 100%;
+  margin: 10px 0 15px;
+  transition: background 1s ease;
+  background: linear-gradient(
+    90deg,
+    var(--blue-team-dark) 0%,
+    var(--blue-team) calc(calc(calc((var(--blue-percentage) * 2) * 0.15) * 1%)),
+    var(--blue-team) calc(var(--blue-percentage) * 1%),
+    var(--red-team) calc(var(--blue-percentage) * 1%),
+    var(--red-team) calc(calc(calc((var(--blue-percentage) * 2) * 0.85) * 1%)),
+    var(--red-team-dark) 100%
+  );
+}
+
+.percentage {
+  font-size: 35px;
+  font-family: var(--secondary-font-family);
+}
+
+#time {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 35px;
+  font-family: var(--secondary-font-family);
+}
+
+#blue {
+  margin-right: auto;
+}
+#red {
+  margin-left: auto;
+}

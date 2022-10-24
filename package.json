@@ -1,0 +1,26 @@
+{
+    "name": "module-twitch",
+    "version": "1.0.0",
+    "description": "Module that provides GFX elements for predictions on twitch",
+    "author": "RCVolus",
+    "license": "MIT",
+    "toolkit": {
+        "modes": [
+            "PLUGIN"
+        ],
+        "plugin": {
+            "main": "dist/plugin.js"
+        },
+        "needsBuild": true
+    },
+    "devDependencies": {
+        "@rcv-prod-toolkit/types": "github:rcv-prod-toolkit/types",
+        "typescript": "^4.3.2"
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "axios": "^1.1.3"
+    }
+}
