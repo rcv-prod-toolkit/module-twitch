@@ -10,7 +10,7 @@ document.querySelector('#settings').addEventListener('submit', (e) => {
     automation: document.querySelector('#automation').checked,
     appId: document.querySelector('#appId').value,
     broadcastLogin: document.querySelector('#broadcastLogin').value,
-    length: document.querySelector('#length').value
+    length: parseInt(document.querySelector('#length').value)
   })
 })
 
