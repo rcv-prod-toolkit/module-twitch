@@ -1,5 +1,5 @@
 import type { PluginContext } from '@rcv-prod-toolkit/types'
-import { Predictions } from './controller/predictions'
+import { Predictions } from './controller/Predictions'
 import { Config } from './types/Config'
 
 module.exports = async (ctx: PluginContext) => {
