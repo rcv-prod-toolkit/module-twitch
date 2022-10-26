@@ -1,4 +1,4 @@
-const namespace = 'module-twitch'
+const container = document.querySelector('.container')
 const blueTeam = document.querySelector('#blue')
 const redTeam = document.querySelector('#red')
 const bar = document.querySelector('#bar')
@@ -14,13 +14,16 @@ function setVoteState(e) {
     return c + o.channel_points
   }, 0)
 
-  const bluePercentage = Math.round((state.prediction.outcomes[0].channel_points / total) * 100)
-  const redPercentage = Math.round((state.prediction.outcomes[1].channel_points / total) * 100)
+  let bluePercentage = 50
+  let redPercentage = 50
+
+  if (total !== 0) {
+    bluePercentage = Math.round((state.prediction.outcomes[0].channel_points / total) * 100)
+    redPercentage = Math.round((state.prediction.outcomes[1].channel_points / total) * 100)
+  }
 
   blueTeam.innerHTML = `${bluePercentage}%`
   redTeam.innerHTML = `${redPercentage}%`
-
-  console.log(bluePercentage, redPercentage)
 
   bar.style.setProperty('--blue-percentage', bluePercentage)
   bar.style.setProperty('--red-percentage', redPercentage)
@@ -120,8 +123,6 @@ function changeColors(e) {
         '--red-team-dark',
         shadeColor(e.teams.redTeam.color, -30)
       )
-
-
   } else {
     document.querySelector(':root').style.setProperty('--red-team', themeRed)
     document
@@ -136,18 +137,18 @@ function changeColors(e) {
 
 
 LPTE.onready(async () => {
-  LPTE.on(namespace, 'update', setVoteState)
+  LPTE.on('module-twitch', 'update', setVoteState)
 
-  LPTE.on(namespace, 'show-platings', (e) => {
-    platingDiv.classList.remove('hide')
+  LPTE.on('module-twitch', 'show-prediction', (e) => {
+    container.classList.remove('hide')
   })
-  LPTE.on(namespace, 'hide-platings', () => {
-    platingDiv.classList.add('hide')
+  LPTE.on('module-twitch', 'hide-prediction', () => {
+    container.classList.add('hide')
   })
 
   const res = await LPTE.request({
     meta: {
-      namespace,
+      namespace: 'module-twitch',
       type: 'request',
       version: 1
     }

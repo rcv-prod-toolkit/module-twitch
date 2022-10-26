@@ -118,7 +118,7 @@ module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.on(namespace, 'resolve-prediction', (e) => {
     if (prediction === undefined) return
 
-    /* prediction.resolvePrediction() */
+    prediction.resolvePrediction(e.winningOutcome)
   })
 
   ctx.LPTE.on(namespace, 'show-prediction', (e) => {

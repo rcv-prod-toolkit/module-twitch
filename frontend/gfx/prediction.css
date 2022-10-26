@@ -29,6 +29,12 @@ body {
   text-align: center;
   padding-top: 6px;
   background: var(--background-color);
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hide {
+  opacity: 0 !important;
 }
 
 #heading {
@@ -45,17 +51,31 @@ body {
 
 #bar {
   --blue-percentage: 50;
+  --red-percentage: 50;
   height: 35px;
   width: 100%;
   margin: 10px 0 15px;
-  transition: background 1s ease;
+  display: flex;
+}
+
+.bar-part {
+  transition: width 1s ease;
+  height: 35px;
+}
+
+.bar-part.blue {
+  width: calc(var(--blue-percentage) * 1%);
   background: linear-gradient(
     90deg,
     var(--blue-team-dark) 0%,
-    var(--blue-team) calc(calc(calc((var(--blue-percentage) * 2) * 0.15) * 1%)),
-    var(--blue-team) calc(var(--blue-percentage) * 1%),
-    var(--red-team) calc(var(--blue-percentage) * 1%),
-    var(--red-team) calc(calc(calc((var(--blue-percentage) * 2) * 0.85) * 1%)),
+    var(--blue-team) 15%
+  );
+}
+.bar-part.red {
+  width: calc(var(--red-percentage) * 1%);
+  background: linear-gradient(
+    90deg,
+    var(--red-team) 85%,
     var(--red-team-dark) 100%
   );
 }

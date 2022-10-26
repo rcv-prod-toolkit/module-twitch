@@ -13,53 +13,124 @@
 <h2>Embed</h2>
 <input style="width: 100%" readonly id="prediction-embed" class="mb-5" />
 
-<div class="d-flex mb-5">
+<div class="d-flex mb-3">
   <div class="btn-group mr-3">
-    <button type="button" class="btn btn-success" onclick="startPrediction()">Start Prediction</button>
-    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-success" onclick="startPrediction()">
+      Start Prediction
+    </button>
+    <button
+      type="button"
+      class="btn btn-success dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/start-prediction`)">Copy Action-Link</button>
+      <button
+        class="dropdown-item"
+        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/start-prediction`)"
+      >
+        Copy Action-Link
+      </button>
     </div>
   </div>
 
   <div class="btn-group mr-3">
-    <button type="button" class="btn btn-danger" onclick="cancelPrediction()">Cancel Prediction</button>
-    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-danger" onclick="cancelPrediction()">
+      Cancel Prediction
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/cancel-prediction`)">Copy Action-Link</button>
+      <button
+        class="dropdown-item"
+        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/cancel-prediction`)"
+      >
+        Copy Action-Link
+      </button>
     </div>
   </div>
 
   <div class="btn-group mr-3">
-    <button type="button" class="btn btn-primary" onclick="resolvePrediction()">Resolve Prediction</button>
-    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-secondary" onclick="showPrediction()">
+      Show Prediction
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/resolve-prediction`)">Copy Action-Link</button>
-    </div>
-  </div>
-
-  <div class="btn-group mr-3">
-    <button type="button" class="btn btn-secondary" onclick="showPrediction()">Show Prediction</button>
-    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/show-prediction`)">Copy Action-Link</button>
+      <button
+        class="dropdown-item"
+        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/show-prediction`)"
+      >
+        Copy Action-Link
+      </button>
     </div>
   </div>
   <div class="btn-group">
-    <button type="button" class="btn btn-secondary" onclick="hidePrediction()">Hide Prediction</button>
-    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-secondary" onclick="hidePrediction()">
+      Hide Prediction
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/hide-prediction`)">Copy Action-Link</button>
+      <button
+        class="dropdown-item"
+        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/hide-prediction`)"
+      >
+        Copy Action-Link
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex mb-3">
+  <div class="mr-3">
+    <select id="winningOutcome" class="form-control"></select>
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary" onclick="resolvePrediction()">
+      Resolve Prediction
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button
+        class="dropdown-item"
+        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/resolve-prediction`)"
+      >
+        Copy Action-Link
+      </button>
     </div>
   </div>
 </div>
@@ -68,21 +139,45 @@
 <form id="settings" class="mb-5">
   <div class="form-group">
     <label for="broadcastLogin">Channel Name</label>
-    <input type="text" class="form-control" id="broadcastLogin" placeholder="Channel Name">
+    <input
+      type="text"
+      class="form-control"
+      id="broadcastLogin"
+      placeholder="Channel Name"
+    />
   </div>
   <div class="form-group">
     <label for="length">Prediction Length</label>
-    <input type="number" min="1" step="1" max="1800" class="form-control" id="length" placeholder="Prediction Length">
+    <input
+      type="number"
+      min="1"
+      step="1"
+      max="1800"
+      class="form-control"
+      id="length"
+      placeholder="Prediction Length"
+    />
   </div>
   <div class="form-group">
     <label for="appId">Twitch App ID</label>
-    <input type="password" autocomplete="new-password" class="form-control" id="appId" placeholder="Twitch App ID">
-    <small id="appIdHelp" class="form-text text-muted">Can be found <a href="https://dev.twitch.tv/console/apps" target="_blank">here</a></small>
+    <input
+      type="password"
+      autocomplete="new-password"
+      class="form-control"
+      id="appId"
+      placeholder="Twitch App ID"
+    />
+    <small id="appIdHelp" class="form-text text-muted"
+      >Can be found
+      <a href="https://dev.twitch.tv/console/apps" target="_blank"
+        >here</a
+      ></small
+    >
   </div>
   <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" value="" id="automation">
+    <input class="form-check-input" type="checkbox" value="" id="automation" disabled />
     <label class="form-check-label" for="automation">
-      Automate Predictions
+      Automate Predictions (Coming soon)
     </label>
   </div>
   <div class="form-group">

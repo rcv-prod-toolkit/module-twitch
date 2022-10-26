@@ -21,6 +21,27 @@ function initSettings(settings) {
   document.querySelector('#length').value = parseInt(settings.length)
 }
 
+const winningOutcome = document.querySelector('#winningOutcome')
+function setVoteState (e) {
+  const state = e.state
+
+  if (state.teams === {} || state.prediction.outcomes.length <= 0) {
+    return
+  }
+
+  const total = state.prediction.outcomes.reduce((c, o) => {
+    return c + o.channel_points
+  }, 0)
+
+  winningOutcome.innerHTML = ''
+  for (const outcome of state.prediction.outcomes) {
+    const option = document.createElement('option')
+    option.value = outcome.id
+    option.text = `${total === 0 ? '50' : Math.round((outcome.channel_points / total) * 100)}% - ${outcome.title}`
+    winningOutcome.add(option)
+  }
+}
+
 function startPrediction() {
   LPTE.emit({
     meta: {
@@ -46,7 +67,8 @@ function resolvePrediction() {
       namespace: 'module-twitch',
       type: 'resolve-prediction',
       version: 1
-    }
+    },
+    winningOutcome: winningOutcome.value
   })
 }
 
@@ -79,6 +101,18 @@ LPTE.onready(async () => {
 
   document.querySelector('#prediction-embed').value = `${location}/prediction.html${apiKey !== null ? '?apikey=' + apiKey: ''}`
   document.querySelector('#prediction-gfx').src = `${location}/prediction.html${apiKey !== null ? '?apikey=' + apiKey: ''}`
+
+  LPTE.on('module-twitch', 'update', setVoteState)
+
+  const res = await LPTE.request({
+    meta: {
+      namespace: 'module-twitch',
+      type: 'request',
+      version: 1
+    }
+  })
+
+  setVoteState(res)
 
   const settings = await LPTE.request({
     meta: {
