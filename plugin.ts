@@ -69,6 +69,21 @@ module.exports = async (ctx: PluginContext) => {
     })
   })
 
+  ctx.LPTE.on(namespace, 'set-token', async (e) => {
+    config.token = e.token
+
+    ctx.LPTE.emit({
+      meta: {
+        type: 'set',
+        namespace: 'plugin-config',
+        version: 1
+      },
+      config: {
+        token: config.token,
+      }
+    })
+  })
+
   ctx.LPTE.on(namespace, 'get-settings', (e) => {
     ctx.LPTE.emit({
       meta: {

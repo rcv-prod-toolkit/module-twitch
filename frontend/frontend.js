@@ -1,3 +1,21 @@
+function checkForToken() {
+  const query = new URLSearchParams(window.location.hash)
+
+  if (query.has('#access_token')) {
+    LPTE.emit({
+      meta: {
+        namespace: 'module-twitch',
+        type: 'set-token',
+        version: 1
+      },
+      token: query.get('#access_token')
+    })
+
+    window.location.hash = ''
+    window.location.replace(window.location)
+  }
+}
+
 document.querySelector('#settings').addEventListener('submit', (e) => {
   e.preventDefault()
 
@@ -94,6 +112,8 @@ function hidePrediction() {
 let server = ''
 
 LPTE.onready(async () => {
+  checkForToken()
+
   server = await window.constants.getWebServerPort()
   const location = `http://${server}/pages/op-module-twitch/gfx`
 
