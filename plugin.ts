@@ -158,8 +158,6 @@ module.exports = async (ctx: PluginContext) => {
     status: 'RUNNING'
   })
 
-  await ctx.LPTE.await('lpt', 'ready', 150000)
-
   const res = await ctx.LPTE.request({
     meta: {
       type: 'request-current',
