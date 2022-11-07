@@ -45,7 +45,7 @@ export class Predictions {
       const res = await axios.post<PredictionStart>(Predictions.url,
         {
           broadcaster_id: this.config.broadcastId,
-          title: `Wer gewinnt Game ${game}?`,
+          title: `How wins game ${game}?`,
           prediction_window: time,
           outcomes: [
             {

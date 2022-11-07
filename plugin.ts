@@ -49,8 +49,7 @@ module.exports = async (ctx: PluginContext) => {
     config.length = e.length
 
     const user = await prediction.getUser(e.broadcastLogin)
-    if (user === undefined) return
-    config.broadcastId = user.data[0].id
+    config.broadcastId = user?.data[0].id
 
     ctx.LPTE.emit({
       meta: {

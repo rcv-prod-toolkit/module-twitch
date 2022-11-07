@@ -1,6 +1,6 @@
 export interface Config {
   appId: string
-  broadcastId: string
+  broadcastId?: string
   broadcastLogin: string
   token: string
   automation: boolean
