@@ -37,6 +37,8 @@ function initSettings(settings) {
   document.querySelector('#appId').value = settings.appId
   document.querySelector('#broadcastLogin').value = settings.broadcastLogin
   document.querySelector('#length').value = parseInt(settings.length)
+
+  document.querySelector('#twitch-auth').href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=http://localhost:3003/pages/op-module-twitch&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
 }
 
 const winningOutcome = document.querySelector('#winningOutcome')
