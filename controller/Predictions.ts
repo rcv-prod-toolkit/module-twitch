@@ -5,7 +5,7 @@ import { PredictionEnd } from '../types/PredictionEnd'
 import { PredictionStart } from '../types/PredictionStart'
 import { PredictionState } from '../types/PredictionState'
 import { User } from '../types/User'
-import axios, { RawAxiosRequestHeaders } from 'axios'
+import axios, { AxiosError, RawAxiosRequestHeaders } from 'axios'
 
 export class Predictions {
 
@@ -83,7 +83,8 @@ export class Predictions {
         this.getPrediction()
       }, 5000)
     } catch (error) {
-      this.ctx.log.error(error)
+      const e = error as AxiosError<any>
+      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
     }
 
     return this.gfxState
@@ -115,7 +116,8 @@ export class Predictions {
 
       return this.gfxState
     } catch (error) {
-      this.ctx.log.error(error)
+      const e = error as AxiosError<any>
+      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
       return this.gfxState
     }
   }
@@ -146,7 +148,8 @@ export class Predictions {
 
       return this.gfxState
     } catch (error) {
-      this.ctx.log.error(error)
+      const e = error as AxiosError<any>
+      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
       return this.gfxState
     }
   }
@@ -178,7 +181,8 @@ export class Predictions {
 
       return this.gfxState
     } catch (error) {
-      this.ctx.log.error(error)
+      const e = error as AxiosError<any>
+      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
       return this.gfxState
     }
   }
@@ -192,7 +196,8 @@ export class Predictions {
 
       return res.data
     } catch (error) {
-      this.ctx.log.error(error)
+      const e = error as AxiosError<any>
+      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
       return undefined
     }
   }
