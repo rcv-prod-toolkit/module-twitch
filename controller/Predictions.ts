@@ -5,12 +5,11 @@ import { PredictionEnd } from '../types/PredictionEnd'
 import { PredictionStart } from '../types/PredictionStart'
 import { PredictionState } from '../types/PredictionState'
 import { User } from '../types/User'
-import axios, { AxiosError, RawAxiosRequestHeaders } from 'axios'
+import axios, { AxiosError } from 'axios'
 
 export class Predictions {
 
   private timer?: NodeJS.Timeout
-  private headers: RawAxiosRequestHeaders
   static url = 'https://api.twitch.tv/helix/predictions'
   static userUrl = 'https://api.twitch.tv/helix/users?login='
 
@@ -31,12 +30,7 @@ export class Predictions {
     private namespace: string,
     private config: Config,
     private ctx: PluginContext
-  ) {
-    this.headers = {
-      Authorization: `Bearer ${config.token}`,
-      'Client-Id': config.appId
-    }
-  }
+  ) {}
 
   async startPrediction(time = 240): Promise<GfxState> {
     const game = (this.gfxState.teams.blueTeam?.score || 0) + (this.gfxState.teams.redTeam?.score || 0) + 1
@@ -57,7 +51,10 @@ export class Predictions {
           ]
         },
         {
-          headers: this.headers,
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+            'Client-Id': this.config.appId
+          },
         }
       )
 
@@ -94,7 +91,10 @@ export class Predictions {
     try {
       const url = `${Predictions.url}?broadcaster_id=${this.config.broadcastId}&id=${this.gfxState.prediction.id}&status=CANCELED`
       const res = await axios.patch<PredictionEnd>(url, {}, {
-        headers: this.headers
+        headers: {
+          Authorization: `Bearer ${this.config.token}`,
+          'Client-Id': this.config.appId
+        },
       })
 
       const json = res.data
@@ -126,7 +126,10 @@ export class Predictions {
     try {
       const url = `${Predictions.url}?broadcaster_id=${this.config.broadcastId}&id=${this.gfxState.prediction.id}&status=RESOLVED&winning_outcome_id=${winningOutcome}`
       const res = await axios.patch<PredictionEnd>(url, {}, {
-        headers: this.headers
+        headers: {
+          Authorization: `Bearer ${this.config.token}`,
+          'Client-Id': this.config.appId
+        },
       })
 
       const json = res.data
@@ -158,7 +161,10 @@ export class Predictions {
     try {
       const url = `${Predictions.url}?broadcaster_id=${this.config.broadcastId}&id=${this.gfxState.prediction.id}`
       const res = await axios.get<PredictionState>(url, {
-        headers: this.headers
+        headers: {
+          Authorization: `Bearer ${this.config.token}`,
+          'Client-Id': this.config.appId
+        },
       })
 
       const json = res.data
@@ -191,7 +197,10 @@ export class Predictions {
     try {
       const url = `${Predictions.userUrl}${login}`
       const res = await axios.get<User>(url, {
-        headers: this.headers
+        headers: {
+          Authorization: `Bearer ${this.config.token}`,
+          'Client-Id': this.config.appId
+        },
       })
 
       return res.data
