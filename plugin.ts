@@ -43,13 +43,19 @@ module.exports = async (ctx: PluginContext) => {
   const prediction = new Predictions(namespace, config, ctx)
 
   ctx.LPTE.on(namespace, 'set-settings', async (e) => {
+    if (e.appId === undefined || e.appId === '') {
+      return ctx.log.warn('AppId is missing!')
+    }
+
     config.appId = e.appId
     config.automation = e.automation
     config.broadcastLogin = e.broadcastLogin
     config.length = e.length
 
-    const user = await prediction.getUser(e.broadcastLogin)
-    config.broadcastId = user?.data[0].id
+    if (config.token && config.token !== '' && config.broadcastLogin && config.broadcastLogin !== '') {
+      const user = await prediction.getUser(e.broadcastLogin)
+      config.broadcastId = user?.data[0].id
+    }
 
     ctx.LPTE.emit({
       meta: {
@@ -70,6 +76,11 @@ module.exports = async (ctx: PluginContext) => {
 
   ctx.LPTE.on(namespace, 'set-token', async (e) => {
     config.token = e.token
+
+    if (config.token && config.token !== '' && config.broadcastLogin && config.broadcastLogin !== '') {
+      const user = await prediction.getUser(e.broadcastLogin)
+      config.broadcastId = user?.data[0].id
+    }
 
     ctx.LPTE.emit({
       meta: {
