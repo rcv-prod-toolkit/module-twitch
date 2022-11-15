@@ -31,14 +31,17 @@ module.exports = async (ctx: PluginContext) => {
   if (configRes === undefined) {
     ctx.log.warn('config could not be loaded')
   }
-  let config: Config = Object.assign({
-    appId: '',
-    broadcastId: '',
-    broadcastLogin: '',
-    token: '',
-    automation: false,
-    length: 240
-  }, configRes?.config)
+  let config: Config = Object.assign(
+    {
+      appId: '',
+      broadcastId: '',
+      broadcastLogin: '',
+      token: '',
+      automation: false,
+      length: 240
+    },
+    configRes?.config
+  )
 
   const prediction = new Predictions(namespace, config, ctx)
 
@@ -52,7 +55,12 @@ module.exports = async (ctx: PluginContext) => {
     config.broadcastLogin = e.broadcastLogin
     config.length = e.length
 
-    if (config.token && config.token !== '' && config.broadcastLogin && config.broadcastLogin !== '') {
+    if (
+      config.token &&
+      config.token !== '' &&
+      config.broadcastLogin &&
+      config.broadcastLogin !== ''
+    ) {
       const user = await prediction.getUser(e.broadcastLogin)
       config.broadcastId = user?.data[0].id
     }
@@ -69,7 +77,7 @@ module.exports = async (ctx: PluginContext) => {
         broadcastLogin: config.broadcastLogin,
         token: config.token,
         automation: config.automation,
-        length: config.length,
+        length: config.length
       }
     })
   })
@@ -77,7 +85,12 @@ module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.on(namespace, 'set-token', async (e) => {
     config.token = e.token
 
-    if (config.token && config.token !== '' && config.broadcastLogin && config.broadcastLogin !== '') {
+    if (
+      config.token &&
+      config.token !== '' &&
+      config.broadcastLogin &&
+      config.broadcastLogin !== ''
+    ) {
       const user = await prediction.getUser(e.broadcastLogin)
       config.broadcastId = user?.data[0].id
     }
@@ -89,7 +102,7 @@ module.exports = async (ctx: PluginContext) => {
         version: 1
       },
       config: {
-        token: config.token,
+        token: config.token
       }
     })
   })
@@ -106,7 +119,7 @@ module.exports = async (ctx: PluginContext) => {
       broadcastLogin: config.broadcastLogin,
       token: config.token,
       automation: config.automation,
-      length: config.length,
+      length: config.length
     })
   })
 

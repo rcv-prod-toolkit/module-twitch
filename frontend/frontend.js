@@ -38,11 +38,13 @@ function initSettings(settings) {
   document.querySelector('#broadcastLogin').value = settings.broadcastLogin
   document.querySelector('#length').value = parseInt(settings.length)
 
-  document.querySelector('#twitch-auth').href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=http://localhost:3003/pages/op-module-twitch&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
+  document.querySelector(
+    '#twitch-auth'
+  ).href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=http://localhost:3003/pages/op-module-twitch&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
 }
 
 const winningOutcome = document.querySelector('#winningOutcome')
-function setVoteState (e) {
+function setVoteState(e) {
   const state = e.state
 
   if (state.teams === {} || state.prediction.outcomes.length <= 0) {
@@ -57,7 +59,9 @@ function setVoteState (e) {
   for (const outcome of state.prediction.outcomes) {
     const option = document.createElement('option')
     option.value = outcome.id
-    option.text = `${total === 0 ? '50' : Math.round((outcome.channel_points / total) * 100)}% - ${outcome.title}`
+    option.text = `${
+      total === 0 ? '50' : Math.round((outcome.channel_points / total) * 100)
+    }% - ${outcome.title}`
     winningOutcome.add(option)
   }
 }
@@ -121,8 +125,14 @@ LPTE.onready(async () => {
 
   const apiKey = await window.constants.getApiKey()
 
-  document.querySelector('#prediction-embed').value = `${location}/prediction.html${apiKey !== null ? '?apikey=' + apiKey: ''}`
-  document.querySelector('#prediction-gfx').src = `${location}/prediction.html${apiKey !== null ? '?apikey=' + apiKey: ''}`
+  document.querySelector(
+    '#prediction-embed'
+  ).value = `${location}/prediction.html${
+    apiKey !== null ? '?apikey=' + apiKey : ''
+  }`
+  document.querySelector('#prediction-gfx').src = `${location}/prediction.html${
+    apiKey !== null ? '?apikey=' + apiKey : ''
+  }`
 
   LPTE.on('module-twitch', 'update', setVoteState)
 

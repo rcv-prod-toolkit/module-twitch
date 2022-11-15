@@ -18,8 +18,12 @@ function setVoteState(e) {
   let redPercentage = 50
 
   if (total !== 0) {
-    bluePercentage = Math.round((state.prediction.outcomes[0].channel_points / total) * 100)
-    redPercentage = Math.round((state.prediction.outcomes[1].channel_points / total) * 100)
+    bluePercentage = Math.round(
+      (state.prediction.outcomes[0].channel_points / total) * 100
+    )
+    redPercentage = Math.round(
+      (state.prediction.outcomes[1].channel_points / total) * 100
+    )
   }
 
   blueTeam.innerHTML = `${bluePercentage}%`
@@ -134,7 +138,6 @@ function changeColors(e) {
     })
   }
 }
-
 
 LPTE.onready(async () => {
   LPTE.on('module-twitch', 'update', setVoteState)

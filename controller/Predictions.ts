@@ -8,7 +8,6 @@ import { User } from '../types/User'
 import axios, { AxiosError } from 'axios'
 
 export class Predictions {
-
   private timer?: NodeJS.Timeout
   static url = 'https://api.twitch.tv/helix/predictions'
   static userUrl = 'https://api.twitch.tv/helix/users?login='
@@ -33,10 +32,14 @@ export class Predictions {
   ) {}
 
   async startPrediction(time = 240): Promise<GfxState> {
-    const game = (this.gfxState.teams.blueTeam?.score || 0) + (this.gfxState.teams.redTeam?.score || 0) + 1
+    const game =
+      (this.gfxState.teams.blueTeam?.score || 0) +
+      (this.gfxState.teams.redTeam?.score || 0) +
+      1
 
     try {
-      const res = await axios.post<PredictionStart>(Predictions.url,
+      const res = await axios.post<PredictionStart>(
+        Predictions.url,
         {
           broadcaster_id: this.config.broadcastId,
           title: `Who wins game ${game}?`,
@@ -54,7 +57,7 @@ export class Predictions {
           headers: {
             Authorization: `Bearer ${this.config.token}`,
             'Client-Id': this.config.appId
-          },
+          }
         }
       )
 
@@ -64,7 +67,7 @@ export class Predictions {
         id: json.data[0].id,
         length: json.data[0].prediction_window,
         outcomes: json.data[0].outcomes,
-        status: json.data[0].status,
+        status: json.data[0].status
       }
 
       this.ctx.LPTE.emit({
@@ -81,7 +84,9 @@ export class Predictions {
       }, 5000)
     } catch (error) {
       const e = error as AxiosError<any>
-      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
+      this.ctx.log.error(
+        `Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`
+      )
     }
 
     return this.gfxState
@@ -90,12 +95,16 @@ export class Predictions {
   async cancelPrediction(): Promise<GfxState> {
     try {
       const url = `${Predictions.url}?broadcaster_id=${this.config.broadcastId}&id=${this.gfxState.prediction.id}&status=CANCELED`
-      const res = await axios.patch<PredictionEnd>(url, {}, {
-        headers: {
-          Authorization: `Bearer ${this.config.token}`,
-          'Client-Id': this.config.appId
-        },
-      })
+      const res = await axios.patch<PredictionEnd>(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+            'Client-Id': this.config.appId
+          }
+        }
+      )
 
       const json = res.data
       this.gfxState.prediction.inProgress = false
@@ -117,7 +126,9 @@ export class Predictions {
       return this.gfxState
     } catch (error) {
       const e = error as AxiosError<any>
-      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
+      this.ctx.log.error(
+        `Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`
+      )
       return this.gfxState
     }
   }
@@ -125,12 +136,16 @@ export class Predictions {
   async resolvePrediction(winningOutcome: string): Promise<GfxState> {
     try {
       const url = `${Predictions.url}?broadcaster_id=${this.config.broadcastId}&id=${this.gfxState.prediction.id}&status=RESOLVED&winning_outcome_id=${winningOutcome}`
-      const res = await axios.patch<PredictionEnd>(url, {}, {
-        headers: {
-          Authorization: `Bearer ${this.config.token}`,
-          'Client-Id': this.config.appId
-        },
-      })
+      const res = await axios.patch<PredictionEnd>(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.config.token}`,
+            'Client-Id': this.config.appId
+          }
+        }
+      )
 
       const json = res.data
       this.gfxState.prediction.inProgress = false
@@ -152,7 +167,9 @@ export class Predictions {
       return this.gfxState
     } catch (error) {
       const e = error as AxiosError<any>
-      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
+      this.ctx.log.error(
+        `Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`
+      )
       return this.gfxState
     }
   }
@@ -164,13 +181,13 @@ export class Predictions {
         headers: {
           Authorization: `Bearer ${this.config.token}`,
           'Client-Id': this.config.appId
-        },
+        }
       })
 
       const json = res.data
       this.gfxState.prediction.inProgress = false
-      this.gfxState.prediction.outcomes = json.data[0].outcomes,
-      this.gfxState.prediction.status = json.data[0].status
+      ;(this.gfxState.prediction.outcomes = json.data[0].outcomes),
+        (this.gfxState.prediction.status = json.data[0].status)
 
       this.ctx.LPTE.emit({
         meta: {
@@ -181,14 +198,21 @@ export class Predictions {
         state: this.gfxState
       })
 
-      if ((json.data[0].status === 'LOCKED' || json.data[0].status === 'RESOLVED' || json.data[0].status === 'CANCELED') && this.timer) {
+      if (
+        (json.data[0].status === 'LOCKED' ||
+          json.data[0].status === 'RESOLVED' ||
+          json.data[0].status === 'CANCELED') &&
+        this.timer
+      ) {
         clearInterval(this.timer)
       }
 
       return this.gfxState
     } catch (error) {
       const e = error as AxiosError<any>
-      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
+      this.ctx.log.error(
+        `Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`
+      )
       return this.gfxState
     }
   }
@@ -200,13 +224,15 @@ export class Predictions {
         headers: {
           Authorization: `Bearer ${this.config.token}`,
           'Client-Id': this.config.appId
-        },
+        }
       })
 
       return res.data
     } catch (error) {
       const e = error as AxiosError<any>
-      this.ctx.log.error(`Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`)
+      this.ctx.log.error(
+        `Request failed with status code ${e.response?.status}: ${e.response?.statusText}. ${e.response?.data.message}`
+      )
       return undefined
     }
   }
