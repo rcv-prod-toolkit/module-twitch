@@ -181,20 +181,8 @@ module.exports = async (ctx: PluginContext) => {
     status: 'RUNNING'
   })
 
-  const res = await ctx.LPTE.request({
-    meta: {
-      type: 'request-current',
-      namespace: 'module-teams',
-      version: 1
-    }
+  ctx.LPTE.on('module-teams', 'teams-loaded', async (e) => {
+    prediction.gfxState.teams = e.teams
+    prediction.gfxState.bestOf = e.bestOf
   })
-
-  if (res === undefined) {
-    return ctx.log.warn('matches could not be loaded')
-  }
-
-  if (res) {
-    prediction.gfxState.teams = res.teams
-    prediction.gfxState.bestOf = res.bestOf
-  }
 }
