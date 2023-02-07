@@ -1,6 +1,6 @@
 {
     "name": "module-twitch",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Module that provides GFX elements for predictions on twitch",
     "author": "RCVolus",
     "license": "MIT",
