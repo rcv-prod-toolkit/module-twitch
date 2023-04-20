@@ -38,7 +38,8 @@ module.exports = async (ctx: PluginContext) => {
       broadcastLogin: '',
       token: '',
       automation: false,
-      length: 240
+      length: 240,
+      usePoll: false
     },
     configRes?.config
   )
@@ -54,6 +55,7 @@ module.exports = async (ctx: PluginContext) => {
     config.automation = e.automation
     config.broadcastLogin = e.broadcastLogin
     config.length = e.length
+    config.usePoll = e.usePoll
 
     if (
       config.token &&
@@ -77,7 +79,8 @@ module.exports = async (ctx: PluginContext) => {
         broadcastLogin: config.broadcastLogin,
         token: config.token,
         automation: config.automation,
-        length: config.length
+        length: config.length,
+        usePoll: config.usePoll
       }
     })
   })
@@ -119,7 +122,8 @@ module.exports = async (ctx: PluginContext) => {
       broadcastLogin: config.broadcastLogin,
       token: config.token,
       automation: config.automation,
-      length: config.length
+      length: config.length,
+      usePoll: config.usePoll
     })
   })
 

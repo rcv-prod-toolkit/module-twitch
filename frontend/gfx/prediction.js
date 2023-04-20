@@ -11,7 +11,7 @@ function setVoteState(e) {
   }
 
   const total = state.prediction.outcomes.reduce((c, o) => {
-    return c + o.channel_points
+    return c + (o?.channel_points | o?.votes)
   }, 0)
 
   let bluePercentage = 50
@@ -19,10 +19,10 @@ function setVoteState(e) {
 
   if (total !== 0) {
     bluePercentage = Math.round(
-      (state.prediction.outcomes[0].channel_points / total) * 100
+      ((state.prediction.outcomes[0]?.channel_points || state.prediction.outcomes[0]?.votes)) * 100
     )
     redPercentage = Math.round(
-      (state.prediction.outcomes[1].channel_points / total) * 100
+      ((state.prediction.outcomes[1]?.channel_points || state.prediction.outcomes[1]?.votes)) * 100
     )
   }
 

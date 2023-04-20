@@ -5,4 +5,5 @@ export interface Config {
   token: string
   automation: boolean
   length: number
+  usePoll: boolean
 }

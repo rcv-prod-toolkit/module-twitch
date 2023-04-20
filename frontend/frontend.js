@@ -28,7 +28,8 @@ document.querySelector('#settings').addEventListener('submit', (e) => {
     automation: document.querySelector('#automation').checked,
     appId: document.querySelector('#appId').value,
     broadcastLogin: document.querySelector('#broadcastLogin').value,
-    length: parseInt(document.querySelector('#length').value)
+    length: parseInt(document.querySelector('#length').value),
+    usePoll: document.querySelector("#usePoll").checked
   })
 })
 
@@ -37,10 +38,13 @@ function initSettings(settings) {
   document.querySelector('#appId').value = settings.appId
   document.querySelector('#broadcastLogin').value = settings.broadcastLogin
   document.querySelector('#length').value = parseInt(settings.length)
+  document.querySelector('#usePoll').checked = settings.usePoll
 
   document.querySelector(
     '#twitch-auth'
   ).href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=http://${server}/pages/op-module-twitch&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
+
+  document.querySelector('.winningOutcome').style.visibility = settings.usePoll ? "hidden" : "visible"
 }
 
 const winningOutcome = document.querySelector('#winningOutcome')
@@ -52,7 +56,7 @@ function setVoteState(e) {
   }
 
   const total = state.prediction.outcomes.reduce((c, o) => {
-    return c + o.channel_points
+    return c + (o?.channel_points | o?.votes)
   }, 0)
 
   winningOutcome.innerHTML = ''
@@ -60,7 +64,7 @@ function setVoteState(e) {
     const option = document.createElement('option')
     option.value = outcome.id
     option.text = `${
-      total === 0 ? '50' : Math.round((outcome.channel_points / total) * 100)
+      total === 0 ? '50' : Math.round(((outcome?.channel_points || outcome.votes )/ total) * 100)
     }% - ${outcome.title}`
     winningOutcome.add(option)
   }
@@ -85,6 +89,7 @@ function cancelPrediction() {
     }
   })
 }
+
 function resolvePrediction() {
   LPTE.emit({
     meta: {
@@ -105,6 +110,7 @@ function showPrediction() {
     }
   })
 }
+
 function hidePrediction() {
   LPTE.emit({
     meta: {
