@@ -14,7 +14,7 @@
 <input style="width: 100%" readonly id="prediction-embed" class="mb-5" />
 
 <div class="d-flex mb-3">
-  <div class="btn-group mr-3">
+  <div class="btn-group mr-3 align-items-center">
     <button type="button" class="btn btn-success" onclick="startPrediction()">
       Start Prediction
     </button>
@@ -106,7 +106,7 @@
   </div>
 </div>
 
-<div class="d-flex mb-3">
+<div class="d-flex mb-3 winningOutcome">
   <div class="mr-3">
     <select id="winningOutcome" class="form-control"></select>
   </div>
@@ -175,16 +175,29 @@
     >
   </div>
   <div class="form-check mb-3">
-    <input
+    <div class="automation-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="automation"
+        disabled
+      />
+      <label class="form-check-label" for="automation">
+        Automate Predictions (Coming soon)
+      </label>
+    </div>
+    <div class="usePoll-check">
+      <input
       class="form-check-input"
       type="checkbox"
       value=""
-      id="automation"
-      disabled
+      id="usePoll"
     />
-    <label class="form-check-label" for="automation">
-      Automate Predictions (Coming soon)
+    <label class="form-check-label" for="usePoll">
+      Use Poll instead of Prediction
     </label>
+    </div>
   </div>
   <div class="d-flex">
     <div class="form-group mr-3">
