@@ -30,7 +30,10 @@
     <div class="dropdown-menu">
       <button
         class="dropdown-item"
-        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/start-prediction`)"
+        onclick="window.getActionLink(
+          'module-twitch',
+          'start-prediction'
+        )"
       >
         Copy Action-Link
       </button>
@@ -53,7 +56,10 @@
     <div class="dropdown-menu">
       <button
         class="dropdown-item"
-        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/cancel-prediction`)"
+        onclick="window.getActionLink(
+          'module-twitch',
+          'cancel-prediction'
+        )"
       >
         Copy Action-Link
       </button>
@@ -76,7 +82,11 @@
     <div class="dropdown-menu">
       <button
         class="dropdown-item"
-        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/show-prediction`)"
+        onclick="
+        window.getActionLink(
+          'module-twitch',
+          'show-prediction'
+        )"
       >
         Copy Action-Link
       </button>
@@ -98,7 +108,10 @@
     <div class="dropdown-menu">
       <button
         class="dropdown-item"
-        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-league-in-game/hide-prediction`)"
+        onclick="window.getActionLink(
+          'module-twitch',
+          'hide-prediction'
+        )"
       >
         Copy Action-Link
       </button>
@@ -127,7 +140,10 @@
     <div class="dropdown-menu">
       <button
         class="dropdown-item"
-        onclick="navigator.clipboard.writeText(`http://${server}/api/events/shortcut/ingest/module-twitch/resolve-prediction`)"
+        onclick="window.getActionLink(
+          'module-twitch',
+          'resolve-prediction'
+        )"
       >
         Copy Action-Link
       </button>
@@ -188,15 +204,10 @@
       </label>
     </div>
     <div class="usePoll-check">
-      <input
-      class="form-check-input"
-      type="checkbox"
-      value=""
-      id="usePoll"
-    />
-    <label class="form-check-label" for="usePoll">
-      Use Poll instead of Prediction
-    </label>
+      <input class="form-check-input" type="checkbox" value="" id="usePoll" />
+      <label class="form-check-label" for="usePoll">
+        Use Poll instead of Prediction
+      </label>
     </div>
   </div>
   <div class="d-flex">
