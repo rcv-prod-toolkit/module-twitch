@@ -51,7 +51,7 @@ const winningOutcome = document.querySelector('#winningOutcome')
 function setVoteState(e) {
   const state = e.state
 
-  if (state.teams === {} || state.prediction.outcomes.length <= 0) {
+  if (state.prediction.outcomes.length <= 0) {
     return
   }
 
@@ -64,7 +64,7 @@ function setVoteState(e) {
     const option = document.createElement('option')
     option.value = outcome.id
     option.text = `${
-      total === 0 ? '50' : Math.round(((outcome?.channel_points || outcome.votes )/ total) * 100)
+      total === 0 ? '50' : Math.round(((outcome?.channel_points || outcome.votes ) / total) * 100)
     }% - ${outcome.title}`
     winningOutcome.add(option)
   }
