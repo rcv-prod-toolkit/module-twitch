@@ -6,7 +6,7 @@ const bar = document.querySelector('#bar')
 function setVoteState(e) {
   const state = e.state
 
-  if (state.teams === {} || state.prediction.outcomes.length <= 0) {
+  if (state.prediction.outcomes.length <= 0) {
     return
   }
 
@@ -18,11 +18,11 @@ function setVoteState(e) {
   let redPercentage = 50
 
   if (total !== 0) {
-    bluePercentage = Math.round(
-      ((state.prediction.outcomes[0]?.channel_points || state.prediction.outcomes[0]?.votes)) * 100
+    bluePercentage = state.prediction.outcomes[0]?.channel_points === 0 ? 0 : Math.round(
+      ((state.prediction.outcomes[0]?.channel_points || state.prediction.outcomes[0]?.votes) / total) * 100
     )
-    redPercentage = Math.round(
-      ((state.prediction.outcomes[1]?.channel_points || state.prediction.outcomes[1]?.votes)) * 100
+    redPercentage = state.prediction.outcomes[1]?.channel_points === 0 ? 0 : Math.round(
+      ((state.prediction.outcomes[1]?.channel_points || state.prediction.outcomes[1]?.votes) / total) * 100
     )
   }
 
