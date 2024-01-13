@@ -12,6 +12,7 @@
             "main": "dist/plugin.js"
         },
         "needsBuild": true,
+        "toolkitVersion": ">=1.8",
         "dependencies": [
             "module-teams"
         ]
