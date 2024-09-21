@@ -368,4 +368,8 @@ export class Predictions {
       return undefined
     }
   }
+
+  async setConfig(config: Config) {
+    this.config = config
+  }
 }

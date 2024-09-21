@@ -88,6 +88,8 @@ module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.on(namespace, 'set-token', async (e) => {
     config.token = e.token
 
+    prediction.setConfig(config)
+
     if (
       config.token &&
       config.token !== '' &&
