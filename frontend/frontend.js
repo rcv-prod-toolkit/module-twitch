@@ -42,7 +42,7 @@ function initSettings(settings) {
 
   document.querySelector(
     '#twitch-auth'
-  ).href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=http://${server}/pages/op-module-twitch&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
+  ).href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${settings.appId}&force_verify=true&redirect_uri=${server}&scope=channel%3Amanage%3Apolls+channel%3Amanage%3Apredictions`
 
   document.querySelector('.winningOutcome').style.visibility = settings.usePoll ? "hidden" : "visible"
 }
@@ -126,8 +126,8 @@ let server = ''
 LPTE.onready(async () => {
   checkForToken()
 
-  server = await window.constants.getWebServerPort()
-  const location = `http://${server}/pages/op-module-twitch/gfx`
+  server = await window.constants.getModuleURL()
+  const location = `${server}/gfx`
 
   const apiKey = await window.constants.getApiKey()
 
